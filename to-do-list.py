@@ -5,8 +5,9 @@ def print_menu():
     print("1. Add Task")
     print("2. View Tasks")
     print("3. Mark Task as Completed")
-    print("4. Delete Task")
-    print("5. Exit")
+    print("4. Edit Task")
+    print("5. Delete Task")
+    print("6. Exit")
 
 def add_task(todo_list):
     task = input("Enter the task: ")
@@ -31,6 +32,16 @@ def mark_completed(todo_list):
     else:
         print("Invalid task number.")
 
+def edit_task(todo_list):
+    view_tasks(todo_list)
+    task_num = int(input("Enter the task number to edit: ")) - 1
+    if 0 <= task_num < len(todo_list):
+        new_task = input("Enter the new task: ")
+        todo_list[task_num]["task"] = new_task
+        print("Task edited successfully!")
+    else:
+        print("Invalid task number.")
+
 def delete_task(todo_list):
     view_tasks(todo_list)
     task_num = int(input("Enter the task number to delete: ")) - 1
@@ -44,7 +55,7 @@ def main():
     todo_list = []
     while True:
         print_menu()
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-6): ")
 
         if choice == '1':
             add_task(todo_list)
@@ -53,12 +64,14 @@ def main():
         elif choice == '3':
             mark_completed(todo_list)
         elif choice == '4':
-            delete_task(todo_list)
+            edit_task(todo_list)
         elif choice == '5':
+            delete_task(todo_list)
+        elif choice == '6':
             print("Exiting the app. Goodbye!")
             break
         else:
-            print("Invalid choice. Please select a valid option (1-5).")
+            print("Invalid choice. Please select a valid option (1-6).")
 
 if __name__ == "__main__":
     main()
