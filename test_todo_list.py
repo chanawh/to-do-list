@@ -1,15 +1,18 @@
-# test_todo_list.py
 import unittest
-from todo_list import add_task
+from unittest.mock import patch
+from io import StringIO
+from todo_list import add_task, view_tasks, mark_completed, edit_task, delete_task
 
-class TestToDoList(unittest.TestCase):
+class TestToDoListApp(unittest.TestCase):
+
     def test_add_task(self):
         todo_list = []
-        add_task(todo_list)  # Corrected the function call
-        self.assertEqual(len(todo_list), 1)
-        self.assertEqual(todo_list[0]["task"], "Test Task")
-        self.assertFalse(todo_list[0]["completed"])
+        with patch('builtins.input', side_effect=['Task 1']):
+            with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+                add_task(todo_list)
+                self.assertEqual(todo_list, [{'task': 'Task 1', 'completed': False}])
+                self.assertEqual(mock_stdout.getvalue().strip(), "Task added successfully!")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
 
